@@ -336,7 +336,7 @@ class ASGIHandler(base.BaseHandler):
             #   allow mapping of a sync iterator.
             # - Use aclosing() when consuming aiter.
             #   See https://github.com/python/cpython/commit/6e8dcda
-            async with aclosing(aiter(response)) as content:
+            async with aclosing(response.__aiter__()) as content:
                 async for part in content:
                     for chunk, _ in self.chunk_bytes(part):
                         await send(
